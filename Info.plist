@@ -5,19 +5,19 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
-	<string>AperturePicasaPlugin</string>
+	<string>ApertureToGooglePlus</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.eider.export.AperturePicasaPlugin</string>
+	<string>biz.blueoceans.ApertureToGooglePlus</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>AperturePicasaPlugin</string>
+	<string>ApertureToGooglePlus</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0.2</string>
 	<key>CFBundleSignature</key>
-	<string>EIDR</string>
+	<string>BLUEOCEANS.BIZ</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>LSHasLocalizedDisplayName</key>
@@ -34,7 +34,7 @@
 			<key>groupName</key>
 			<string>Export</string>
 			<key>uuid</key>
-			<string>616BA321-B4C2-49DF-8FD8-2E3392D2D240</string>
+			<string>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx</string>
 		</dict>
 	</array>
 	<key>ProPlugPlugInList</key>
@@ -43,11 +43,11 @@
 			<key>className</key>
 			<string>AperturePicasaPlugin</string>
 			<key>displayName</key>
-			<string>Picasa Web</string>
+			<string>Google+</string>
 			<key>group</key>
-			<string>616BA321-B4C2-49DF-8FD8-2E3392D2D240</string>
+			<string>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx</string>
 			<key>helpURL</key>
-			<string>http://oyarzun.github.com/AperturePicasaPlugin</string>
+			<string>http://blueoceans.biz/ApertureToGoogle+</string>
 			<key>infoString</key>
 			<string>infoString</string>
 			<key>protocolNames</key>
