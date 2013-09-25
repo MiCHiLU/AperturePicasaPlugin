@@ -104,6 +104,7 @@
   // Upload tracking.
   NSMutableArray *exportedImages;	
   int _uploadedCount;
+  int _uploadRetryCount;
 }
 
 // Actions

@@ -445,6 +445,7 @@ static const char kPicasaPath[]  = "data/feed/api/all";
 	// Set up our progress to count uploaded bytes instead of images
 	[self lockProgress];
 	_uploadedCount = 0;
+	_uploadRetryCount = 0;
 	exportProgress.currentValue = 0;
     exportProgress.totalValue = [_exportManager imageCount];
 	[exportProgress.message autorelease];
@@ -1049,8 +1050,8 @@ static const char kPicasaPath[]  = "data/feed/api/all";
       return;
     }
     [self lockProgress];
-    exportProgress.message = [[NSString stringWithFormat:@"Step 2 of 2: Uploading picture %d / %d",
-                               ++_uploadedCount, [_exportManager imageCount]] retain];
+    exportProgress.message = [[NSString stringWithFormat:@"Step 2 of 2: Uploading picture %d / %d, %d retry",
+                               ++_uploadedCount, [_exportManager imageCount], _uploadRetryCount] retain];
     exportProgress.currentValue++;
     [self unlockProgress];
     
@@ -1060,6 +1061,7 @@ static const char kPicasaPath[]  = "data/feed/api/all";
 - (BOOL)uploadPhoto:(APPicture*)picture {
   DebugLog(@"Loading picture %@ at %@", [picture title], [picture path]);
   if ([picture data]) {
+      @try {
     // make a new entry for the photo
     GDataEntryPhoto *newEntry = [GDataEntryPhoto photoEntry];
       
@@ -1115,6 +1117,13 @@ static const char kPicasaPath[]  = "data/feed/api/all";
 
 	//Not needed anymore by anyone.
 	  [mimeType release];
+      } @catch (NSError *error) {
+          [self lockProgress];
+          exportProgress.message = [[NSString stringWithFormat:@"Step 2 of 2: Uploading picture %d / %d (%d retry)",
+                                     _uploadedCount, [_exportManager imageCount], ++_uploadRetryCount] retain];
+          [self unlockProgress];
+          return [self uploadPhoto:picture];
+      }
   } else {
     NSString *photoName = [[picture path] lastPathComponent];
     // nil data from photo file.
@@ -1191,20 +1200,26 @@ static const char kPicasaPath[]  = "data/feed/api/all";
     DebugLog(@"Added photo %@ failed: %@", [picture title], [error description]);
     // Don't bother showing error message if user has cancelled the operation.aiel
     if ([self shouldCancelExport] == NO) {
-      APPicture *picture = [exportedImages objectAtIndex:0];
-      NSString *format = [self _localizedStringForKey:@"uploadErrorFormat"
-                                         defaultValue:@"There was an error uploading %@."];
-      NSString *errorMessage = [NSString stringWithFormat:format, [[picture path] lastPathComponent]];
-      NSAlert *alert = [NSAlert alertWithMessageText:errorMessage
-                                       defaultButton:[self _localizedStringForKey:@"OK"
-                                                                     defaultValue:@"OK"]
-                                     alternateButton:nil
-                                         otherButton:nil
-                           informativeTextWithFormat:@"%@",[error description]];
-      [alert setAlertStyle:NSCriticalAlertStyle];
-      [alert runModal];
+//      APPicture *picture = [exportedImages objectAtIndex:0];
+//      NSString *format = [self _localizedStringForKey:@"uploadErrorFormat"
+//                                         defaultValue:@"There was an error uploading %@."];
+//      NSString *errorMessage = [NSString stringWithFormat:format, [[picture path] lastPathComponent]];
+//      NSAlert *alert = [NSAlert alertWithMessageText:errorMessage
+//                                       defaultButton:[self _localizedStringForKey:@"OK"
+//                                                                     defaultValue:@"OK"]
+//                                     alternateButton:nil
+//                                         otherButton:nil
+//                           informativeTextWithFormat:@"%@",[error description]];
+      //[alert setAlertStyle:NSCriticalAlertStyle];
+      //[alert runModal];
+        [self lockProgress];
+        exportProgress.message = [[NSString stringWithFormat:@"Step 2 of 2: Uploading picture %d / %d, %d retry",
+                                   --_uploadedCount, [_exportManager imageCount], ++_uploadRetryCount] retain];
+        [self unlockProgress];
+        // Upload retry.
+        [self _uploadNextImage];
     }
-    [_exportManager shouldCancelExport];
+    //[_exportManager shouldCancelExport];
   }
 } 
   
