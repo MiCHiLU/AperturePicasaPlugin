@@ -840,7 +840,7 @@ static const char kPicasaPath[]  = "data/feed/api/all";
 	[connectionProgressIndicator startAnimation:self];
 	[connectionStatusField setStringValue:
    [self _localizedStringForKey:@"connectionString"
-                   defaultValue:@"Connecting to Picasa Server..."]];
+                   defaultValue:@"Connecting to Google Server..."]];
 	[NSApp beginSheet:connectionWindow
      modalForWindow:[_exportManager window]
       modalDelegate:self
