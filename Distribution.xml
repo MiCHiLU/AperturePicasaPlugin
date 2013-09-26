@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<installer-gui-script minSpecVersion="1">
+    <domains enable_currentUserHome="true"/>
+    <pkg-ref id="biz.blueoceans.ApertureToGooglePlus"/>
+    <options customize="never" require-scripts="false"/>
+    <choices-outline>
+        <line choice="default">
+            <line choice="biz.blueoceans.ApertureToGooglePlus"/>
+        </line>
+    </choices-outline>
+    <choice id="default"/>
+    <choice id="biz.blueoceans.ApertureToGooglePlus" visible="false">
+        <pkg-ref id="biz.blueoceans.ApertureToGooglePlus"/>
+    </choice>
+    <pkg-ref id="biz.blueoceans.ApertureToGooglePlus" version="1.1" onConclusion="none">ApertureToGooglePlus.pkg</pkg-ref>
+</installer-gui-script>
