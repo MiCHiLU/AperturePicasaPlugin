@@ -14,3 +14,6 @@ Distribution.xml:
 	productbuild --synthesize \
 	--package ApertureToGooglePlus.pkg \
 	Distribution.xml
+
+clean:
+	rm *.pkg
