@@ -1,6 +1,13 @@
-
-.DS_Store
-
+*.pkg
+project.xcworkspace*
 xcuserdata*
 
-project.xcworkspace*
+syntax: glob
+
+*.sw?
+*.tmp
+*~
+.DS_Store
+tags
+
+syntax: regexp
